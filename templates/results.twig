@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset='UTF-8'>
+    <title>HTTP-API-Test (Bonus-Aufgabe)</title>
+    <style>
+        body { font-family: sans-serif; }
+        table { border-collapse: collapse; }
+        td, th { padding: 0.2em; vertical-align: top; border: 1px solid black; }
+        pre { border: 1px solid gray; padding: 0.2em; background-color: white; font-size: 80%; white-space: pre-wrap }
+        .failure { background-color: #ffdddd; }
+        .success { background-color: #a6efa0; }
+    </style>
+</head>
+<body>
+<h1>HTTP-API-Test (Bonus-Aufgabe)</h1>
+
+{% if exception %}
+    <p class="failure"><b>Fehler:</b> {{ exception.message }}</p>
+{% endif %}
+
+<form method="post" action="../index.php">
+    <input type="text" name="url" value="{{ url }}" size="50">
+    <input type="submit" value="Testen">
+</form>
+
+<hr>
+
+<table>
+    <tr><th>Test</th><th>Erwartet</th><th>Tatsächlich</th></tr>
+    {% for test in results %}
+        <tr>
+            <td>{{ test.name }}</td>
+            <td>{{ test.expected|raw }}</td>
+            <td class="{{ test.resultClass }}">{{ test.actual|raw }}</td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="3">Es wurden keine Tests ausgeführt</td>
+        </tr>
+    {% endfor %}
+</table>
+</body>
+</html>
